@@ -44,3 +44,7 @@ class Player(Camera):
             self.move_up(vel)
         if key_state[pg.K_e]:
             self.move_down(vel)
+        if key_state[pg.K_SPACE]:
+            self.move_up(vel)
+        if key_state[pg.K_LSHIFT]:
+            self.move_down(vel)

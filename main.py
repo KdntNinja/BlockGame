@@ -1,15 +1,26 @@
-from settings import *
+import sys
+
 import moderngl as mgl
 import pygame as pg
-import sys
-from shader_program import ShaderProgram
-from scene import Scene
+import pygame_menu
+
+from config import Config
 from player import Player
+from scene import Scene
+from settings import *
+from shader_program import ShaderProgram
 from textures import Textures
+
+game_state = None
 
 
 class VoxelEngine:
     def __init__(self):
+        self.shader_program = None
+        self.scene = None
+        self.player = None
+        self.textures = None
+
         pg.init()
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, MAJOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, MINOR_VER)
@@ -68,6 +79,42 @@ class VoxelEngine:
         sys.exit()
 
 
+class Menu:
+    def __init__(self):
+        pg.init()
+        self.config = Config()
+
+        self.surface = pg.display.set_mode((600, 400))
+        self.menu = pygame_menu.Menu("Welcome", 300, 400, theme=pygame_menu.themes.THEME_BLUE)
+        self.menu.add.text_input("Name :", default=self.config.get("name", "Player 1"), onchange=self.save_name)
+        self.menu.add.button("Play", self.start_the_game)
+        self.menu.add.button("Settings", self.create_settings_menu)
+        self.menu.add.button("Quit", pygame_menu.events.EXIT)
+
+    def create_settings_menu(self):
+        settings_menu = pygame_menu.Menu("Settings", 300, 400, theme=pygame_menu.themes.THEME_BLUE)
+        settings_menu.add.button("Fullscreen", self.toggle_fullscreen)
+        settings_menu.add.button("Back", pygame_menu.events.BACK)
+        settings_menu.mainloop(self.surface)
+
+    def save_name(self, value):
+        self.config.set("name", value)
+
+    def toggle_fullscreen(self):
+        fullscreen = self.config.get("fullscreen", False)
+        self.config.set("fullscreen", not fullscreen)
+        pg.display.toggle_fullscreen()
+
+    def start_the_game(self):
+        self.menu.disable()
+        pg.display.set_caption("BlockGame")
+        app = VoxelEngine()
+        app.run()
+
+    def run(self):
+        self.menu.mainloop(self.surface)
+
+
 if __name__ == "__main__":
-    app = VoxelEngine()
-    app.run()
+    menu = Menu()
+    menu.run()

@@ -1,7 +1,7 @@
 from numba import njit
 import numpy as np
-import glm
 import math
+import glm
 
 # OpenGL settings
 MAJOR_VER, MINOR_VER = 3, 3
@@ -44,10 +44,9 @@ FAR = 2000.0
 PITCH_MAX = glm.radians(89)
 
 # player
-PLAYER_SPEED = 0.005
-PLAYER_ROT_SPEED = 0.003
-# PLAYER_POS = glm.vec3(CENTER_XZ, WORLD_H * CHUNK_SIZE, CENTER_XZ)
-PLAYER_POS = glm.vec3(CENTER_XZ, CHUNK_SIZE, CENTER_XZ)
+PLAYER_SPEED = 0.020
+PLAYER_ROT_SPEED = 0.006
+PLAYER_POS = glm.vec3(CENTER_XZ, WORLD_H * CHUNK_SIZE, CENTER_XZ)
 MOUSE_SENSITIVITY = 0.002
 
 # colors
@@ -67,7 +66,7 @@ SNOW_LVL = 54
 STONE_LVL = 49
 DIRT_LVL = 40
 GRASS_LVL = 8
-SAND_LVL = 7
+SAND_LVL = 6
 
 # tree settings
 TREE_PROBABILITY = 0.02
