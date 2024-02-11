@@ -1,9 +1,11 @@
 import json
+import os
 
 
 class Config:
-    def __init__(self, filename="config.txt"):
-        self.filename = filename
+    def __init__(self, filename="config.json"):
+        self.file_path = "data/"
+        self.filename = os.path.join(self.file_path, filename)
         self.config = self.load_config()
 
     def load_config(self):
@@ -15,7 +17,7 @@ class Config:
 
     def save_config(self):
         with open(self.filename, "w") as f:
-            json.dump(self.config, f)
+            json.dump(self.config, f, indent=4)
 
     def get(self, key, default=None):
         return self.config.get(key, default)
