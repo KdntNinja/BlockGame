@@ -1,5 +1,5 @@
 {
-    "name": "Player 1",
+    "name": "Kaiden",
     "fullscreen": [
         [
             "ON",
@@ -9,16 +9,16 @@
     ],
     "mode": [
         [
-            "Survival",
-            1
+            "Spectator",
+            0
         ],
-        1
+        0
     ],
     "world": [
         [
-            "Constant",
-            1
+            "Initial",
+            0
         ],
-        1
+        0
     ]
 }
