@@ -1,4 +1,24 @@
 {
-    "name": "Kaiden",
-    "fullscreen": true
+    "name": "Player 1",
+    "fullscreen": [
+        [
+            "ON",
+            1
+        ],
+        1
+    ],
+    "mode": [
+        [
+            "Survival",
+            1
+        ],
+        1
+    ],
+    "world": [
+        [
+            "Constant",
+            1
+        ],
+        1
+    ]
 }

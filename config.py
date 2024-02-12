@@ -1,6 +1,7 @@
 import json
 import os
 
+from default import Default
 
 class Config:
     def __init__(self, filename="config.json"):
@@ -9,11 +10,18 @@ class Config:
         self.config = self.load_config()
 
     def load_config(self):
+        default_instance = Default()
         try:
             with open(self.filename, "r") as f:
-                return json.load(f)
+                try:
+                    config = json.load(f)
+                except json.JSONDecodeError:
+                    config = default_instance.get_defaults()
+                if not config:
+                    config = default_instance.get_defaults()
+                return config
         except FileNotFoundError:
-            return {}
+            return default_instance.get_defaults()
 
     def save_config(self):
         with open(self.filename, "w") as f:
