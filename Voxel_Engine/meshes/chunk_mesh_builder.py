@@ -65,9 +65,9 @@ def pack_data(x, y, z, voxel_id, face_id, ao_id, flip_id):
 @njit
 def get_chunk_index(world_voxel_pos):
     wx, wy, wz = world_voxel_pos
-    cx = wx // CHUNK_SIZE
-    cy = wy // CHUNK_SIZE
-    cz = wz // CHUNK_SIZE
+    cx = wx // GENERATION_INTENSITY
+    cy = wy // GENERATION_INTENSITY
+    cz = wz // GENERATION_INTENSITY
     if not (0 <= cx < WORLD_W and 0 <= cy < WORLD_H and 0 <= cz < WORLD_D):
         return -1
 
@@ -83,7 +83,7 @@ def is_void(local_voxel_pos, world_voxel_pos, world_voxels):
     chunk_voxels = world_voxels[chunk_index]
 
     x, y, z = local_voxel_pos
-    voxel_index = x % CHUNK_SIZE + z % CHUNK_SIZE * CHUNK_SIZE + y % CHUNK_SIZE * CHUNK_AREA
+    voxel_index = x % GENERATION_INTENSITY + z % GENERATION_INTENSITY * GENERATION_INTENSITY + y % GENERATION_INTENSITY * CHUNK_AREA
 
     if chunk_voxels[voxel_index]:
         return False
@@ -103,19 +103,19 @@ def build_chunk_mesh(chunk_voxels, format_size, chunk_pos, world_voxels):
     vertex_data = np.empty(CHUNK_VOL * 18 * format_size, dtype="uint32")
     index = 0
 
-    for x in range(CHUNK_SIZE):
-        for y in range(CHUNK_SIZE):
-            for z in range(CHUNK_SIZE):
-                voxel_id = chunk_voxels[x + CHUNK_SIZE * z + CHUNK_AREA * y]
+    for x in range(GENERATION_INTENSITY):
+        for y in range(GENERATION_INTENSITY):
+            for z in range(GENERATION_INTENSITY):
+                voxel_id = chunk_voxels[x + GENERATION_INTENSITY * z + CHUNK_AREA * y]
 
                 if not voxel_id:
                     continue
 
                 # voxel world position
                 cx, cy, cz = chunk_pos
-                wx = x + cx * CHUNK_SIZE
-                wy = y + cy * CHUNK_SIZE
-                wz = z + cz * CHUNK_SIZE
+                wx = x + cx * GENERATION_INTENSITY
+                wy = y + cy * GENERATION_INTENSITY
+                wz = z + cz * GENERATION_INTENSITY
 
                 # top face
                 if is_void((x, y + 1, z), (wx, wy + 1, wz), world_voxels):

@@ -35,7 +35,7 @@ def get_height(x, z):
 
 @njit
 def get_index(x, y, z):
-    return x + CHUNK_SIZE * z + CHUNK_AREA * y
+    return x + GENERATION_INTENSITY * z + CHUNK_AREA * y
 
 
 @njit
@@ -81,11 +81,11 @@ def place_tree(voxels, x, y, z, voxel_id):
     rnd = random()
     if voxel_id != GRASS or rnd > TREE_PROBABILITY:
         return None
-    if y + TREE_HEIGHT >= CHUNK_SIZE:
+    if y + TREE_HEIGHT >= GENERATION_INTENSITY:
         return None
-    if x - TREE_H_WIDTH < 0 or x + TREE_H_WIDTH >= CHUNK_SIZE:
+    if x - TREE_H_WIDTH < 0 or x + TREE_H_WIDTH >= GENERATION_INTENSITY:
         return None
-    if z - TREE_H_WIDTH < 0 or z + TREE_H_WIDTH >= CHUNK_SIZE:
+    if z - TREE_H_WIDTH < 0 or z + TREE_H_WIDTH >= GENERATION_INTENSITY:
         return None
 
     # dirt under the tree
@@ -108,3 +108,22 @@ def place_tree(voxels, x, y, z, voxel_id):
 
     # top
     voxels[get_index(x, y + TREE_HEIGHT - 2, z)] = LEAVES
+
+
+def generate_chunks(player_position, chunks, generate_chunk, unload_chunk):
+    player_chunk_x = int(player_position[0]) // CHUNK_SIZE
+    player_chunk_z = int(player_position[2]) // CHUNK_SIZE
+
+    # Get the generation area
+    generation_area = player_chunk_x, player_chunk_z
+
+    for x in range(generation_area[0], generation_area[1]):
+        for z in range(generation_area[2], generation_area[3]):
+            chunk_coords = (x, z)
+            if chunk_coords not in chunks:
+                chunks[chunk_coords] = generate_chunk(x, z)
+
+    chunks_to_unload = [coords for coords in chunks if coords[0] < generation_area[0] or coords[0] > generation_area[1] or coords[1] < generation_area[2] or coords[1] > generation_area[3]]
+    for coords in chunks_to_unload:
+        unload_chunk(chunks[coords])
+        del chunks[coords]

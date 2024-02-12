@@ -16,9 +16,9 @@ class World:
         self.voxel_handler.update()
 
     def build_chunks(self):
-        player_chunk_x = self.app.player.position[0] // CHUNK_SIZE
-        player_chunk_y = self.app.player.position[1] // CHUNK_SIZE
-        player_chunk_z = self.app.player.position[2] // CHUNK_SIZE
+        player_chunk_x = self.app.player.position[0] // GENERATION_INTENSITY
+        player_chunk_y = self.app.player.position[1] // GENERATION_INTENSITY
+        player_chunk_z = self.app.player.position[2] // GENERATION_INTENSITY
 
         player_chunk = Chunk(self, position=(player_chunk_x, player_chunk_y, player_chunk_z))
         player_chunk_index = (int(player_chunk_x) + WORLD_W * int(player_chunk_z) + WORLD_AREA * int(player_chunk_y)) % WORLD_VOL

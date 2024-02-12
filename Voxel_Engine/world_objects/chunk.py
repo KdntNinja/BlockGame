@@ -12,11 +12,11 @@ class Chunk:
         self.mesh: ChunkMesh = None
         self.is_empty = True
 
-        self.center = (glm.vec3(self.position) + 0.5) * CHUNK_SIZE
+        self.center = (glm.vec3(self.position) + 0.5) * GENERATION_INTENSITY
         self.is_on_frustum = self.app.player.frustum.is_on_frustum
 
     def get_model_matrix(self):
-        m_model = glm.translate(glm.mat4(), glm.vec3(self.position) * CHUNK_SIZE)
+        m_model = glm.translate(glm.mat4(), glm.vec3(self.position) * GENERATION_INTENSITY)
         return m_model
 
     def set_uniform(self):
@@ -33,7 +33,7 @@ class Chunk:
     def build_voxels(self):
         voxels = np.zeros(CHUNK_VOL, dtype="uint8")
 
-        cx, cy, cz = glm.ivec3(self.position) * CHUNK_SIZE
+        cx, cy, cz = glm.ivec3(self.position) * GENERATION_INTENSITY
         self.generate_terrain(voxels, cx, cy, cz)
 
         if np.any(voxels):
@@ -43,12 +43,12 @@ class Chunk:
     @staticmethod
     @njit
     def generate_terrain(voxels, cx, cy, cz):
-        for x in range(CHUNK_SIZE):
+        for x in range(GENERATION_INTENSITY):
             wx = x + cx
-            for z in range(CHUNK_SIZE):
+            for z in range(GENERATION_INTENSITY):
                 wz = z + cz
                 world_height = get_height(wx, wz)
-                local_height = min(world_height - cy, CHUNK_SIZE)
+                local_height = min(world_height - cy, GENERATION_INTENSITY)
 
                 for y in range(local_height):
                     wy = y + cy

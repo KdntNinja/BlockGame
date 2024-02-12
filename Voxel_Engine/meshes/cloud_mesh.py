@@ -15,7 +15,7 @@ class CloudMesh(BaseMesh):
         self.vao = self.get_vao()
 
     def get_vertex_data(self):
-        cloud_data = np.zeros(WORLD_AREA * CHUNK_SIZE ** 2, dtype="uint8")
+        cloud_data = np.zeros(WORLD_AREA * GENERATION_INTENSITY ** 2, dtype="uint8")
         self.gen_clouds(cloud_data)
 
         return self.build_mesh(cloud_data)
@@ -23,20 +23,20 @@ class CloudMesh(BaseMesh):
     @staticmethod
     @njit
     def gen_clouds(cloud_data):
-        for x in range(WORLD_W * CHUNK_SIZE):
-            for z in range(WORLD_D * CHUNK_SIZE):
+        for x in range(WORLD_W * GENERATION_INTENSITY):
+            for z in range(WORLD_D * GENERATION_INTENSITY):
 
                 if noise2(0.13 * x, 0.13 * z) < 0.2:
                     continue
-                cloud_data[x + WORLD_W * CHUNK_SIZE * z] = 1
+                cloud_data[x + WORLD_W * GENERATION_INTENSITY * z] = 1
 
     @staticmethod
     @njit
     def build_mesh(cloud_data):
         mesh = np.empty(WORLD_AREA * CHUNK_AREA * 6 * 3, dtype="uint16")
         index = 0
-        width = WORLD_W * CHUNK_SIZE
-        depth = WORLD_D * CHUNK_SIZE
+        width = WORLD_W * GENERATION_INTENSITY
+        depth = WORLD_D * GENERATION_INTENSITY
 
         y = CLOUD_HEIGHT
         visited = set()

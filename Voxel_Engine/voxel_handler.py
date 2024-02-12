@@ -44,17 +44,17 @@ class VoxelHandler:
 
         if lx == 0:
             self.rebuild_adj_chunk((wx - 1, wy, wz))
-        elif lx == CHUNK_SIZE - 1:
+        elif lx == GENERATION_INTENSITY - 1:
             self.rebuild_adj_chunk((wx + 1, wy, wz))
 
         if ly == 0:
             self.rebuild_adj_chunk((wx, wy - 1, wz))
-        elif ly == CHUNK_SIZE - 1:
+        elif ly == GENERATION_INTENSITY - 1:
             self.rebuild_adj_chunk((wx, wy + 1, wz))
 
         if lz == 0:
             self.rebuild_adj_chunk((wx, wy, wz - 1))
-        elif lz == CHUNK_SIZE - 1:
+        elif lz == GENERATION_INTENSITY - 1:
             self.rebuild_adj_chunk((wx, wy, wz + 1))
 
     def remove_voxel(self):
@@ -135,15 +135,15 @@ class VoxelHandler:
         return False
 
     def get_voxel_id(self, voxel_world_pos):
-        cx, cy, cz = chunk_pos = voxel_world_pos / CHUNK_SIZE
+        cx, cy, cz = chunk_pos = voxel_world_pos / GENERATION_INTENSITY
 
         if 0 <= cx < WORLD_W and 0 <= cy < WORLD_H and 0 <= cz < WORLD_D:
             chunk_index = cx + WORLD_W * cz + WORLD_AREA * cy
             chunk = self.chunks[chunk_index]
 
-            lx, ly, lz = voxel_local_pos = voxel_world_pos - chunk_pos * CHUNK_SIZE
+            lx, ly, lz = voxel_local_pos = voxel_world_pos - chunk_pos * GENERATION_INTENSITY
 
-            voxel_index = lx + CHUNK_SIZE * lz + CHUNK_AREA * ly
+            voxel_index = lx + GENERATION_INTENSITY * lz + CHUNK_AREA * ly
             voxel_id = chunk.voxels[voxel_index]
 
             return voxel_id, voxel_index, voxel_local_pos, chunk
