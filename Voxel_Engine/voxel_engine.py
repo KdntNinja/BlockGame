@@ -13,14 +13,14 @@ from config import Config
 
 
 class VoxelEngine:
-    def __init__(self):
+    def __init__(self, res):
         pg.init()
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, MAJOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, MINOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, DEPTH_SIZE)
         pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, NUM_SAMPLES)
-        pg.display.set_mode(WIN_RES, pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
+        pg.display.set_mode(res, pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
 
         self.config = Config()
 
@@ -40,6 +40,8 @@ class VoxelEngine:
 
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
+
+        self.loaded = False
 
         self.is_running = True
         self.on_init()
@@ -66,14 +68,16 @@ class VoxelEngine:
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                self.is_running = False
-            self.player.handle_event(event=event)
+            if event.type in [pg.QUIT, pg.KEYDOWN, pg.MOUSEMOTION]:  # handle only necessary events
+                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                    self.is_running = False
+                self.player.handle_event(event=event)
 
     def run(self):
         while self.is_running:
             self.handle_events()
             self.update()
             self.render()
+            self.loaded = True
         pg.quit()
         sys.exit()

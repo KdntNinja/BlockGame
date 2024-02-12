@@ -4,13 +4,15 @@ from random import randint
 import glm
 import math
 
+from resolution import get_screen_resolution
+
 # OpenGL settings
 MAJOR_VER, MINOR_VER = 3, 3
 DEPTH_SIZE = 24
 NUM_SAMPLES = 1  # antialiasing
 
 # resolution
-WIN_RES = glm.vec2(1600, 900)
+WIN_RES = glm.vec2(get_screen_resolution())
 
 # world generation
 SEED = randint(0, 1000000)
@@ -39,7 +41,7 @@ CENTER_Y = WORLD_H * H_CHUNK_SIZE
 
 # camera
 ASPECT_RATIO = WIN_RES.x / WIN_RES.y
-FOV_DEG = 96
+FOV_DEG = 55
 V_FOV = glm.radians(FOV_DEG)  # vertical FOV
 H_FOV = 2 * math.atan(math.tan(V_FOV * 0.5) * ASPECT_RATIO)  # horizontal FOV
 NEAR = 0.1

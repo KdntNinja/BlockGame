@@ -4,7 +4,7 @@ from Voxel_Engine.noise import noise2, noise3
 from Voxel_Engine.engine_settings import *
 
 
-@njit
+@njit(fastmath=True)
 def get_height(x, z):
     # island mask
     island = 1 / (pow(0.0025 * math.hypot(x - CENTER_XZ, z - CENTER_XZ), 20) + 0.0001)
@@ -18,16 +18,19 @@ def get_height(x, z):
     f1 = 0.005
     f2, f4, f8 = f1 * 2, f1 * 4, f1 * 8
 
+    x_f1, x_f2, x_f4, x_f8 = x * f1, x * f2, x * f4, x * f8
+    z_f1, z_f2, z_f4, z_f8 = z * f1, z * f2, z * f4, z * f8
+
     if noise2(0.1 * x, 0.1 * z) < 0:
         a1 /= 1.07
 
     height = 0
-    height += noise2(x * f1, z * f1) * a1 + a1
-    height += noise2(x * f2, z * f2) * a2 - a2
-    height += noise2(x * f4, z * f4) * a4 + a4
-    height += noise2(x * f8, z * f8) * a8 - a8
+    height += noise2(x_f1, z_f1) * a1 + a1
+    height += noise2(x_f2, z_f2) * a2 - a2
+    height += noise2(x_f4, z_f4) * a4 + a4
+    height += noise2(x_f8, z_f8) * a8 - a8
 
-    height = max(height,  noise2(x * f8, z * f8) + 2)
+    height = max(height,  noise2(x_f8, z_f8) + 2)
     height *= island
 
     return int(height)
@@ -40,8 +43,6 @@ def get_index(x, y, z):
 
 @njit
 def set_voxel_id(voxels, x, y, z, wx, wy, wz, world_height):
-    voxel_id = 0
-
     if wy < world_height - 1:
         # create caves
         if (noise3(wx * 0.09, wy * 0.09, wz * 0.09) > 0 and
@@ -110,7 +111,7 @@ def place_tree(voxels, x, y, z, voxel_id):
     voxels[get_index(x, y + TREE_HEIGHT - 2, z)] = LEAVES
 
 
-def generate_chunks(player_position, chunks, generate_chunk, unload_chunk):
+def generate_chunks_around_player(player_position, chunks, generate_chunk, unload_chunk):
     player_chunk_x = int(player_position[0]) // CHUNK_SIZE
     player_chunk_z = int(player_position[2]) // CHUNK_SIZE
 
