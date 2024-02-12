@@ -1,7 +1,7 @@
 from numba import njit
 import numpy as np
-import math
 import glm
+import math
 
 # OpenGL settings
 MAJOR_VER, MINOR_VER = 3, 3
@@ -10,6 +10,12 @@ NUM_SAMPLES = 1  # antialiasing
 
 # resolution
 WIN_RES = glm.vec2(1600, 900)
+
+
+# data file path
+
+DATA_PATH = "data/"
+CONFIG_FILE = f"{DATA_PATH}config.json"
 
 # world generation
 SEED = 16

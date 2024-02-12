@@ -1,12 +1,12 @@
 import json
 import os
 
+from settings import CONFIG_FILE
 from default import Default
 
 class Config:
-    def __init__(self, filename="config.json"):
-        self.file_path = "data/"
-        self.filename = os.path.join(self.file_path, filename)
+    def __init__(self):
+        self.filename = CONFIG_FILE
         self.config = self.load_config()
 
     def load_config(self):

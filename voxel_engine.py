@@ -3,6 +3,7 @@ import sys
 import moderngl as mgl
 import pygame as pg
 
+from config import Config
 from player import Player
 from scene import Scene
 from settings import *
@@ -12,19 +13,21 @@ from textures import Textures
 
 class VoxelEngine:
     def __init__(self):
-        self.shader_program = None
-        self.scene = None
-        self.player = None
-        self.textures = None
-
         pg.init()
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, MAJOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, MINOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, DEPTH_SIZE)
         pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, NUM_SAMPLES)
+        pg.display.set_mode(WIN_RES, pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
 
-        pg.display.set_mode(WIN_RES, flags=pg.OPENGL | pg.DOUBLEBUF)
+        self.config = Config()
+
+        self.shader_program = None
+        self.scene = None
+        self.player = None
+        self.textures = None
+
         self.ctx = mgl.create_context()
 
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)

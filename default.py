@@ -1,5 +1,7 @@
 import json
 
+from settings import CONFIG_FILE
+
 class Default:
     def __init__(self):
         self.name: str = "Player 1"
@@ -14,6 +16,6 @@ class Default:
             "mode": self.mode,
             "world": self.world,
         }
-        with open("config.json", "w") as f:
+        with open(CONFIG_FILE, "w") as f:
             json.dump(defaults, f, indent=4)
         return defaults

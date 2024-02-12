@@ -35,9 +35,9 @@ class Menu:
         self.temp_config = self.config.load_config()
 
         settings_menu = pygame_menu.Menu("Settings", self.width, self.height, theme=pygame_menu.themes.THEME_BLUE)
-        settings_menu.add.selector("Fullscreen :", [("OFF", 0), ("ON", 1)], onchange=lambda value, index: self.toggle_fullscreen(value), default=self.default_config.fullscreen)
-        settings_menu.add.selector("Mode :", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.change_config("mode", value), default=self.default_config.mode)
-        settings_menu.add.selector("World :", [("Initial", 0), ("Constant", 1)], onchange=lambda value, index: self.change_config("world", value), default=self.default_config.world)
+        settings_menu.add.selector("Fullscreen :", [("OFF", 0), ("ON", 1)], onchange=lambda value, index: self.change_config("fullscreen", value), default=int(self.temp_config["fullscreen"]))
+        settings_menu.add.selector("Mode :", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.change_config("mode", value), default=int(self.temp_config["mode"]))
+        settings_menu.add.selector("World :", [("Initial", 0), ("Constant", 1)], onchange=lambda value, index: self.change_config("world", value), default=int(self.temp_config["world"]))
         settings_menu.add.button("Back", self.exit_settings_menu)
         settings_menu.mainloop(self.surface)
 
@@ -54,11 +54,6 @@ class Menu:
     def change_config(self, parameter: str, value):
         self.temp_config[parameter] = value
         self.save_config()
-
-    def toggle_fullscreen(self, value):
-        self.temp_config["fullscreen"] = value
-        self.config.config = self.temp_config
-        self.config.save_config()
 
     def start_the_game(self):
         self.save_config()
