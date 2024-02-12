@@ -1,7 +1,5 @@
-from settings import *
-from meshes.chunk_mesh import ChunkMesh
-import random
-from terrain_gen import *
+from Voxel_Engine.meshes.chunk_mesh import ChunkMesh
+from Voxel_Engine.terrain_gen import *
 
 
 class Chunk:

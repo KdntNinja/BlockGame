@@ -1,5 +1,5 @@
-from settings import *
-from meshes.base_mesh import BaseMesh
+from Voxel_Engine.engine_settings import *
+from Voxel_Engine.meshes.base_mesh import BaseMesh
 
 
 class CubeMesh(BaseMesh):

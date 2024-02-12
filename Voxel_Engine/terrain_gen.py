@@ -1,6 +1,7 @@
-from noise import noise2, noise3
 from random import random
-from settings import *
+
+from Voxel_Engine.noise import noise2, noise3
+from Voxel_Engine.engine_settings import *
 
 
 @njit

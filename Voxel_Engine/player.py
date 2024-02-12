@@ -1,6 +1,6 @@
 import pygame as pg
-from camera import Camera
-from settings import *
+from Voxel_Engine.camera import Camera
+from Voxel_Engine.engine_settings import *
 
 
 class Player(Camera):

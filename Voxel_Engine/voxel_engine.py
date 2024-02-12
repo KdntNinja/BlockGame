@@ -3,12 +3,13 @@ import sys
 import moderngl as mgl
 import pygame as pg
 
+from Voxel_Engine.player import Player
+from Voxel_Engine.scene import Scene
+from Voxel_Engine.engine_settings import *
+from Voxel_Engine.shader_program import ShaderProgram
+from Voxel_Engine.textures import Textures
+
 from config import Config
-from player import Player
-from scene import Scene
-from settings import *
-from shader_program import ShaderProgram
-from textures import Textures
 
 
 class VoxelEngine:

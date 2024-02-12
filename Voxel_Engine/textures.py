@@ -18,7 +18,7 @@ class Textures:
         self.texture_1.use(location=2)
 
     def load(self, file_name, is_tex_array=False):
-        texture = pg.image.load(f"assets/{file_name}")
+        texture = pg.image.load(f"Voxel_Engine/assets/{file_name}")
         texture = pg.transform.flip(texture, flip_x=True, flip_y=False)
 
         if is_tex_array:

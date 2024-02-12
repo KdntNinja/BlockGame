@@ -1,6 +1,8 @@
-from settings import SEED
 from numba import njit
 from opensimplex.internals import _noise2, _noise3, _init
+
+from Voxel_Engine.engine_settings import SEED
+
 
 perm, perm_grad_index3 = _init(seed=SEED)
 

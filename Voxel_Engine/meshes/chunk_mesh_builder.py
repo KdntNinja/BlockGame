@@ -1,4 +1,4 @@
-from settings import *
+from Voxel_Engine.engine_settings import *
 
 @njit
 def get_ao(local_pos, world_pos, world_voxels, plane):

@@ -1,5 +1,4 @@
-from meshes.quad_mesh import QuadMesh
-from settings import *
+from Voxel_Engine.meshes.quad_mesh import QuadMesh
 
 
 class Water:

@@ -1,5 +1,4 @@
-from settings import *
-from meshes.cloud_mesh import CloudMesh
+from Voxel_Engine.meshes.cloud_mesh import CloudMesh
 
 
 class Clouds:

@@ -1,4 +1,4 @@
-from settings import *
+from Voxel_Engine.engine_settings import *
 
 
 class Frustum:

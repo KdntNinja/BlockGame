@@ -1,5 +1,4 @@
 import json
-import os
 
 from settings import CONFIG_FILE
 from default_config import Default
@@ -10,22 +9,27 @@ class Config:
         self.config = self.load_config()
 
     def load_config(self):
-        default_instance = Default()
+        default_config_instance = Default()
         try:
             with open(self.filename, "r") as f:
                 try:
                     config = json.load(f)
                 except json.JSONDecodeError:
-                    config = default_instance.get_defaults()
+                    config = default_config_instance.get_defaults()
                 if not config:
-                    config = default_instance.get_defaults()
+                    config = default_config_instance.get_defaults()
                 return config
         except FileNotFoundError:
-            return default_instance.get_defaults()
+            return default_config_instance.get_defaults()
 
     def save_config(self):
+        with open(self.filename, "r") as f:
+            existing_config = json.load(f)
+
+        existing_config.update(self.config)
+
         with open(self.filename, "w") as f:
-            json.dump(self.config, f, indent=4)
+            json.dump(existing_config, f, indent=4)
 
     def get(self, key, default=None):
         return self.config.get(key, default)

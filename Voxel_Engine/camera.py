@@ -1,5 +1,5 @@
-from settings import *
-from frustum import Frustum
+from Voxel_Engine.engine_settings import *
+from Voxel_Engine.frustum import Frustum
 
 
 class Camera:
