@@ -2,7 +2,7 @@ import json
 import os
 
 from settings import CONFIG_FILE
-from default import Default
+from default_config import Default
 
 class Config:
     def __init__(self):

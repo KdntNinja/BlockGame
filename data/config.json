@@ -1,24 +1,6 @@
 {
     "name": "Kaiden",
-    "fullscreen": [
-        [
-            "ON",
-            1
-        ],
-        1
-    ],
-    "mode": [
-        [
-            "Spectator",
-            0
-        ],
-        0
-    ],
-    "world": [
-        [
-            "Initial",
-            0
-        ],
-        0
-    ]
+    "fullscreen": 0,
+    "mode": 0,
+    "world": 0
 }

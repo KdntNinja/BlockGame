@@ -5,9 +5,9 @@ from settings import CONFIG_FILE
 class Default:
     def __init__(self):
         self.name: str = "Player 1"
-        self.fullscreen: int = 1
-        self.mode: int = 1
-        self.world: int = 1
+        self.fullscreen: int = 0
+        self.mode: int = 0
+        self.world: int = 0
 
     def get_defaults(self):
         defaults = {
