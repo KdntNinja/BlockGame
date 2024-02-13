@@ -3,12 +3,11 @@ import sys
 import moderngl as mgl
 import pygame as pg
 
+from Voxel_Engine.engine_settings import *
 from Voxel_Engine.player import Player
 from Voxel_Engine.scene import Scene
-from Voxel_Engine.engine_settings import *
 from Voxel_Engine.shader_program import ShaderProgram
 from Voxel_Engine.textures import Textures
-
 from config import Config
 
 
@@ -21,6 +20,7 @@ class VoxelEngine:
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, DEPTH_SIZE)
         pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, NUM_SAMPLES)
         pg.display.set_mode(res, pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
+
 
         self.config = Config()
 

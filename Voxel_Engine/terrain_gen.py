@@ -89,6 +89,14 @@ def place_tree(voxels, x, y, z, voxel_id):
     if z - TREE_H_WIDTH < 0 or z + TREE_H_WIDTH >= GENERATION_INTENSITY:
         return None
 
+    # Check for sand in the surrounding blocks
+    for dx in range(-2, 3):
+        for dz in range(-2, 3):
+            if x + dx < 0 or x + dx >= GENERATION_INTENSITY or z + dz < 0 or z + dz >= GENERATION_INTENSITY:
+                continue
+            if voxels[get_index(x + dx, y, z + dz)] == SAND:
+                return None
+
     # dirt under the tree
     voxels[get_index(x, y, z)] = DIRT
 
@@ -109,22 +117,3 @@ def place_tree(voxels, x, y, z, voxel_id):
 
     # top
     voxels[get_index(x, y + TREE_HEIGHT - 2, z)] = LEAVES
-
-
-def generate_chunks_around_player(player_position, chunks, generate_chunk, unload_chunk):
-    player_chunk_x = int(player_position[0]) // CHUNK_SIZE
-    player_chunk_z = int(player_position[2]) // CHUNK_SIZE
-
-    # Get the generation area
-    generation_area = player_chunk_x, player_chunk_z
-
-    for x in range(generation_area[0], generation_area[1]):
-        for z in range(generation_area[2], generation_area[3]):
-            chunk_coords = (x, z)
-            if chunk_coords not in chunks:
-                chunks[chunk_coords] = generate_chunk(x, z)
-
-    chunks_to_unload = [coords for coords in chunks if coords[0] < generation_area[0] or coords[0] > generation_area[1] or coords[1] < generation_area[2] or coords[1] > generation_area[3]]
-    for coords in chunks_to_unload:
-        unload_chunk(chunks[coords])
-        del chunks[coords]
