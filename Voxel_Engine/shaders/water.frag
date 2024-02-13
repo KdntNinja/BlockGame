@@ -19,7 +19,7 @@ uniform float time;
 void main() {
     vec2 movingUV = uv;
     movingUV.x += time;
-    movingUV.y += time ;
+    movingUV.y += time;
 
     vec3 tex_col = texture(u_texture_0, movingUV).rgb;
     vec3 tex_col_1 = texture(u_texture_1, movingUV).rgb;
