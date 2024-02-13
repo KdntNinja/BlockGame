@@ -19,20 +19,17 @@ class VoxelEngine:
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, DEPTH_SIZE)
         pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, NUM_SAMPLES)
-        pg.display.set_mode(res, pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
 
-
-        self.config = Config()
-
-        self.shader_program = None
-        self.scene = None
-        self.player = None
-        self.textures = None
-
+        pg.display.set_mode(res, flags=pg.OPENGL | pg.DOUBLEBUF)
         self.ctx = mgl.create_context()
 
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)
-        self.ctx.gc_mode = "auto"
+        self.ctx.gc_mode = 'auto'
+
+        self.textures = None
+        self.player = None
+        self.shader_program = None
+        self.scene = None
 
         self.clock = pg.time.Clock()
         self.delta_time = 0
@@ -40,8 +37,6 @@ class VoxelEngine:
 
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
-
-        self.loaded = False
 
         self.is_running = True
         self.on_init()
@@ -57,9 +52,9 @@ class VoxelEngine:
         self.shader_program.update()
         self.scene.update()
 
-        self.delta_time = self.clock.tick(FPS)
+        self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
-        pg.display.set_caption(f"{self.clock.get_fps() :.0f}")
+        pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
 
     def render(self):
         self.ctx.clear(color=BG_COLOR)
@@ -68,16 +63,14 @@ class VoxelEngine:
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type in [pg.QUIT, pg.KEYDOWN, pg.MOUSEMOTION]:
-                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                    self.is_running = False
-                self.player.handle_event(event=event)
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                self.is_running = False
+            self.player.handle_event(event=event)
 
     def run(self):
         while self.is_running:
             self.handle_events()
             self.update()
             self.render()
-            self.loaded = True
         pg.quit()
         sys.exit()
