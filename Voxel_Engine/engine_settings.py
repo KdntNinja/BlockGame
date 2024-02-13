@@ -11,6 +11,9 @@ MAJOR_VER, MINOR_VER = 3, 3
 DEPTH_SIZE = 24
 NUM_SAMPLES = 1  # antialiasing
 
+# game
+FPS = 60
+
 # resolution
 WIN_RES = glm.vec2(get_screen_resolution())
 

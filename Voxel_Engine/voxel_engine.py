@@ -57,7 +57,7 @@ class VoxelEngine:
         self.shader_program.update()
         self.scene.update()
 
-        self.delta_time = self.clock.tick()
+        self.delta_time = self.clock.tick(FPS)
         self.time = pg.time.get_ticks() * 0.001
         pg.display.set_caption(f"{self.clock.get_fps() :.0f}")
 
@@ -68,7 +68,7 @@ class VoxelEngine:
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type in [pg.QUIT, pg.KEYDOWN, pg.MOUSEMOTION]:  # handle only necessary events
+            if event.type in [pg.QUIT, pg.KEYDOWN, pg.MOUSEMOTION]:
                 if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                     self.is_running = False
                 self.player.handle_event(event=event)

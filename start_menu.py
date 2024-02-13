@@ -68,9 +68,9 @@ class Menu:
     def create_settings_menu(self):
         settings_menu = pygame_menu.Menu("Settings", self.width, self.height, theme=self.theme)
 
-        settings_menu.add.selector("Fullscreen: ", [("OFF", 0), ("ON", 1)], onchange=lambda value, index: self.config.change_config("fullscreen", index), default=int(self.temp_config["fullscreen"]))
-        settings_menu.add.selector("Mode: ", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.config.change_config("mode", index), default=int(self.temp_config["mode"]))
-        settings_menu.add.selector("World: ", [("Initial", 0), ("Constant", 1)], onchange=lambda value, index: self.config.change_config("world", index), default=int(self.temp_config["world"]))
+        settings_menu.add.selector("", [("Windowed", 0), ("Fullscreen", 1)], onchange=lambda value, index: self.config.change_config("fullscreen", index), default=int(self.temp_config["fullscreen"]))
+        settings_menu.add.selector("", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.config.change_config("mode", index), default=int(self.temp_config["mode"]))
+        settings_menu.add.selector("", [("Initial Gen", 0), ("Constant Gen", 1)], onchange=lambda value, index: self.config.change_config("world", index), default=int(self.temp_config["world"]))
         settings_menu.add.button("Back", self.exit_settings_menu)
         settings_menu.mainloop(self.surface)
 
