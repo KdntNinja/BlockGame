@@ -8,7 +8,7 @@ class Water:
         self.time = 0.0
 
     def update(self):
-        self.time += 0.005
+        self.time += 0.003
         self.mesh.program["time"].value = self.time
 
     def render(self):
