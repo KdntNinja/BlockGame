@@ -70,7 +70,7 @@ class Menu:
 
         settings_menu.add.selector("", [("Windowed", 0), ("Fullscreen", 1)], onchange=lambda value, index: self.config.change_config("fullscreen", index), default=int(self.temp_config["fullscreen"]))
         settings_menu.add.selector("", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.config.change_config("mode", index), default=int(self.temp_config["mode"]))
-        settings_menu.add.selector("", [("Initial Gen", 0), ("Constant Gen", 1)], onchange=lambda value, index: self.config.change_config("world", index), default=int(self.temp_config["world"]))
+        settings_menu.add.selector("", [("Initial World", 0), ("Constant World", 1)], onchange=lambda value, index: self.config.change_config("world", index), default=int(self.temp_config["world"]))
         settings_menu.add.button("Back", self.exit_settings_menu)
         settings_menu.mainloop(self.surface)
 
