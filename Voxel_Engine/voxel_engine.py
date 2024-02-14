@@ -24,7 +24,7 @@ class VoxelEngine:
         self.ctx = mgl.create_context()
 
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)
-        self.ctx.gc_mode = 'auto'
+        self.ctx.gc_mode = "auto"
 
         self.textures = None
         self.player = None
@@ -54,7 +54,7 @@ class VoxelEngine:
 
         self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
-        pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
+        pg.display.set_caption(f"{self.clock.get_fps() :.0f}")
 
     def render(self):
         self.ctx.clear(color=BG_COLOR)

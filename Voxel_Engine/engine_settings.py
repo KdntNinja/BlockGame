@@ -18,6 +18,7 @@ FPS = 60
 WIN_RES = glm.vec2(get_screen_resolution())
 
 # world generation
+RADIUS = 16
 SEED = randint(0, 1000000)
 GENERATION_INTENSITY = randint(20, 32)
 
