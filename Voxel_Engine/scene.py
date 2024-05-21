@@ -23,7 +23,7 @@ class Scene:
         self.world.render()
 
         # rendering without cull face
-        self.app.ctx.disable(mgl.CULL_FACE)
+        self.app.ctx.enable(mgl.CULL_FACE)
         self.clouds.render()
         self.water.render()
         self.app.ctx.enable(mgl.CULL_FACE)

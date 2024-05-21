@@ -2,6 +2,8 @@ from Voxel_Engine.engine_settings import *
 from Voxel_Engine.world_objects.chunk import Chunk
 from Voxel_Engine.voxel_handler import VoxelHandler
 
+from concurrent.futures import ThreadPoolExecutor
+
 
 class World:
     def __init__(self, app):
@@ -26,17 +28,21 @@ class World:
         self.voxels[player_chunk_index] = player_chunk.build_voxels()
         player_chunk.voxels = self.voxels[player_chunk_index]
 
-        for x in range(WORLD_W):
-            for y in range(WORLD_H):
-                for z in range(WORLD_D):
-                    if x == player_chunk_x and y == player_chunk_y and z == player_chunk_z:
-                        continue
+        with ThreadPoolExecutor() as executor:
+            for x in range(WORLD_W):
+                for y in range(WORLD_H):
+                    for z in range(WORLD_D):
+                        if x == player_chunk_x and y == player_chunk_y and z == player_chunk_z:
+                            continue
 
-                    chunk = Chunk(self, position=(x, y, z))
-                    chunk_index = (x + WORLD_W * z + WORLD_AREA * y) % WORLD_VOL
-                    self.chunks[chunk_index] = chunk
-                    self.voxels[chunk_index] = chunk.build_voxels()
-                    chunk.voxels = self.voxels[chunk_index]
+                        executor.submit(self.build_single_chunk, x, y, z)
+
+    def build_single_chunk(self, x, y, z):
+        chunk = Chunk(self, position=(x, y, z))
+        chunk_index = (x + WORLD_W * z + WORLD_AREA * y) % WORLD_VOL
+        self.chunks[chunk_index] = chunk
+        self.voxels[chunk_index] = chunk.build_voxels()
+        chunk.voxels = self.voxels[chunk_index]
 
     def build_chunk_mesh(self):
         for chunk in self.chunks:
