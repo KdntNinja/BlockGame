@@ -1,5 +1,8 @@
 from Voxel_Engine.meshes.chunk_mesh import ChunkMesh
 from Voxel_Engine.terrain_gen import *
+from numba import njit, prange
+import numpy as np
+import glm
 
 
 class Chunk:
@@ -41,16 +44,20 @@ class Chunk:
         return voxels
 
     @staticmethod
-    @njit
+    @njit(parallel=True)
     def generate_terrain(voxels, cx, cy, cz):
-
-        for x in range(GENERATION_INTENSITY):
+        for x in prange(GENERATION_INTENSITY):
             wx = x + cx
-            for z in range(GENERATION_INTENSITY):
+            for z in prange(GENERATION_INTENSITY):
                 wz = z + cz
                 world_height = get_height(wx, wz)
                 local_height = min(world_height - cy, GENERATION_INTENSITY)
 
-                for y in range(local_height):
+                for y in prange(local_height):
                     wy = y + cy
                     set_voxel_id(voxels, x, y, z, wx, wy, wz, world_height)
+
+    @staticmethod
+    @njit
+    def set_voxel_id(voxels, x, y, z, wx, wy, wz, world_height):
+        set_voxel_id(voxels, x, y, z, wx, wy, wz, world_height)

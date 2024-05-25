@@ -1,16 +1,12 @@
-import ctypes
 from config import Config
+
+from screeninfo import get_monitors
 
 def get_screen_resolution():
     config = Config()
     if config.get("fullscreen") == 1:
-        if "windll" in dir(ctypes):
-            user32 = ctypes.windll.user32
-            screen_width, screen_height = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-        else:
-            from Xlib import display
-            resolution = display.Display().screen().root.get_geometry()
-            screen_width, screen_height = resolution.width, resolution.height
-        return screen_width, screen_height
+        monitor = get_monitors()[0]
+        screen_width, screen_height = monitor.width, monitor.height
     else:
-        return 1600, 800
+        screen_width, screen_height = 1600, 800
+    return screen_width, screen_height

@@ -1,3 +1,4 @@
+from numba import prange
 from random import random
 
 from Voxel_Engine.noise import noise2, noise3
@@ -90,8 +91,8 @@ def place_tree(voxels, x, y, z, voxel_id):
         return None
 
     # Check for sand in the surrounding blocks
-    for dx in range(-2, 3):
-        for dz in range(-2, 3):
+    for dx in prange(-2, 3):
+        for dz in prange(-2, 3):
             if x + dx < 0 or x + dx >= GENERATION_INTENSITY or z + dz < 0 or z + dz >= GENERATION_INTENSITY:
                 continue
             if voxels[get_index(x + dx, y, z + dz)] == SAND:
@@ -102,17 +103,17 @@ def place_tree(voxels, x, y, z, voxel_id):
 
     # leaves
     m = 0
-    for n, iy in enumerate(range(TREE_H_HEIGHT, TREE_HEIGHT - 1)):
+    for n, iy in enumerate(prange(TREE_H_HEIGHT, TREE_HEIGHT - 1)):
         k = iy % 2
         rng = int(random() * 2)
-        for ix in range(-TREE_H_WIDTH + m, TREE_H_WIDTH - m * rng):
-            for iz in range(-TREE_H_WIDTH + m * rng, TREE_H_WIDTH - m):
+        for ix in prange(-TREE_H_WIDTH + m, TREE_H_WIDTH - m * rng):
+            for iz in prange(-TREE_H_WIDTH + m * rng, TREE_H_WIDTH - m):
                 if (ix + iz) % 4:
                     voxels[get_index(x + ix + k, y + iy, z + iz + k)] = LEAVES
         m += 1 if n > 0 else 3 if n > 1 else 0
 
     # tree trunk
-    for iy in range(1, TREE_HEIGHT - 2):
+    for iy in prange(1, TREE_HEIGHT - 2):
         voxels[get_index(x, y + iy, z)] = WOOD
 
     # top
