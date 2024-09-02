@@ -24,15 +24,19 @@ class Textures:
         if is_tex_array:
             num_layers = 3 * texture.get_height() // texture.get_width()
             texture = self.app.ctx.texture_array(
-                size=(texture.get_width(), texture.get_height() // num_layers, num_layers),
+                size=(
+                    texture.get_width(),
+                    texture.get_height() // num_layers,
+                    num_layers,
+                ),
                 components=4,
-                data=pg.image.tostring(texture, "RGBA")
+                data=pg.image.tostring(texture, "RGBA"),
             )
         else:
             texture = self.ctx.texture(
                 size=texture.get_size(),
                 components=4,
-                data=pg.image.tostring(texture, "RGBA", False)
+                data=pg.image.tostring(texture, "RGBA", False),
             )
         texture.anisotropy = 32.0
         texture.build_mipmaps()

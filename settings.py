@@ -1,4 +1,3 @@
-
 # data file path
 
 DATA_PATH = "data/"

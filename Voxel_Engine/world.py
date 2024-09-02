@@ -22,8 +22,14 @@ class World:
         player_chunk_y = self.app.player.position[1] // GENERATION_INTENSITY
         player_chunk_z = self.app.player.position[2] // GENERATION_INTENSITY
 
-        player_chunk = Chunk(self, position=(player_chunk_x, player_chunk_y, player_chunk_z))
-        player_chunk_index = (int(player_chunk_x) + WORLD_W * int(player_chunk_z) + WORLD_AREA * int(player_chunk_y)) % WORLD_VOL
+        player_chunk = Chunk(
+            self, position=(player_chunk_x, player_chunk_y, player_chunk_z)
+        )
+        player_chunk_index = (
+            int(player_chunk_x)
+            + WORLD_W * int(player_chunk_z)
+            + WORLD_AREA * int(player_chunk_y)
+        ) % WORLD_VOL
         self.chunks[player_chunk_index] = player_chunk
         self.voxels[player_chunk_index] = player_chunk.build_voxels()
         player_chunk.voxels = self.voxels[player_chunk_index]
@@ -32,7 +38,11 @@ class World:
             for x in range(WORLD_W):
                 for y in range(WORLD_H):
                     for z in range(WORLD_D):
-                        if x == player_chunk_x and y == player_chunk_y and z == player_chunk_z:
+                        if (
+                            x == player_chunk_x
+                            and y == player_chunk_y
+                            and z == player_chunk_z
+                        ):
                             continue
 
                         executor.submit(self.build_single_chunk, x, y, z)

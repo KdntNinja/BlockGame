@@ -80,7 +80,9 @@ class VoxelHandler:
         # start point
         x1, y1, z1 = self.app.player.position
         # end point
-        x2, y2, z2 = self.app.player.position + self.app.player.forward * MAX_RAY_DIST
+        x2, y2, z2 = (
+            self.app.player.position + self.app.player.forward * MAX_RAY_DIST
+        )
 
         current_voxel_pos = glm.ivec3(x1, y1, z1)
         self.voxel_id = 0
@@ -89,21 +91,38 @@ class VoxelHandler:
 
         dx = glm.sign(x2 - x1)
         delta_x = min(dx / (x2 - x1), 10000000.0) if dx != 0 else 10000000.0
-        max_x = delta_x * (1.0 - glm.fract(x1)) if dx > 0 else delta_x * glm.fract(x1)
+        max_x = (
+            delta_x * (1.0 - glm.fract(x1))
+            if dx > 0
+            else delta_x * glm.fract(x1)
+        )
 
         dy = glm.sign(y2 - y1)
         delta_y = min(dy / (y2 - y1), 10000000.0) if dy != 0 else 10000000.0
-        max_y = delta_y * (1.0 - glm.fract(y1)) if dy > 0 else delta_y * glm.fract(y1)
+        max_y = (
+            delta_y * (1.0 - glm.fract(y1))
+            if dy > 0
+            else delta_y * glm.fract(y1)
+        )
 
         dz = glm.sign(z2 - z1)
         delta_z = min(dz / (z2 - z1), 10000000.0) if dz != 0 else 10000000.0
-        max_z = delta_z * (1.0 - glm.fract(z1)) if dz > 0 else delta_z * glm.fract(z1)
+        max_z = (
+            delta_z * (1.0 - glm.fract(z1))
+            if dz > 0
+            else delta_z * glm.fract(z1)
+        )
 
         while not (max_x > 1.0 and max_y > 1.0 and max_z > 1.0):
 
             result = self.get_voxel_id(voxel_world_pos=current_voxel_pos)
             if result[0]:
-                self.voxel_id, self.voxel_index, self.voxel_local_pos, self.chunk = result
+                (
+                    self.voxel_id,
+                    self.voxel_index,
+                    self.voxel_local_pos,
+                    self.chunk,
+                ) = result
                 self.voxel_world_pos = current_voxel_pos
 
                 if step_dir == 0:
@@ -141,7 +160,9 @@ class VoxelHandler:
             chunk_index = cx + WORLD_W * cz + WORLD_AREA * cy
             chunk = self.chunks[chunk_index]
 
-            lx, ly, lz = voxel_local_pos = voxel_world_pos - chunk_pos * GENERATION_INTENSITY
+            lx, ly, lz = voxel_local_pos = (
+                voxel_world_pos - chunk_pos * GENERATION_INTENSITY
+            )
 
             voxel_index = lx + GENERATION_INTENSITY * lz + CHUNK_AREA * ly
             voxel_id = chunk.voxels[voxel_index]

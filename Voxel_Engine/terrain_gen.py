@@ -8,7 +8,9 @@ from Voxel_Engine.engine_settings import *
 @njit(fastmath=True)
 def get_height(x, z):
     # island mask
-    island = 1 / (pow(0.0025 * math.hypot(x - CENTER_XZ, z - CENTER_XZ), 20) + 0.0001)
+    island = 1 / (
+        pow(0.0025 * math.hypot(x - CENTER_XZ, z - CENTER_XZ), 20) + 0.0001
+    )
     island = min(island, 1)
 
     # amplitude
@@ -31,7 +33,7 @@ def get_height(x, z):
     height += noise2(x_f4, z_f4) * a4 + a4
     height += noise2(x_f8, z_f8) * a8 - a8
 
-    height = max(height,  noise2(x_f8, z_f8) + 2)
+    height = max(height, noise2(x_f8, z_f8) + 2)
     height *= island
 
     return int(height)
@@ -46,8 +48,10 @@ def get_index(x, y, z):
 def set_voxel_id(voxels, x, y, z, wx, wy, wz, world_height):
     if wy < world_height - 1:
         # create caves
-        if (noise3(wx * 0.09, wy * 0.09, wz * 0.09) > 0 and
-                noise2(wx * 0.1, wz * 0.1) * 3 + 3 < wy < world_height - 10):
+        if (
+            noise3(wx * 0.09, wy * 0.09, wz * 0.09) > 0
+            and noise2(wx * 0.1, wz * 0.1) * 3 + 3 < wy < world_height - 10
+        ):
             voxel_id = 0
 
         else:
@@ -93,7 +97,12 @@ def place_tree(voxels, x, y, z, voxel_id):
     # Check for sand in the surrounding blocks
     for dx in prange(-2, 3):
         for dz in prange(-2, 3):
-            if x + dx < 0 or x + dx >= GENERATION_INTENSITY or z + dz < 0 or z + dz >= GENERATION_INTENSITY:
+            if (
+                x + dx < 0
+                or x + dx >= GENERATION_INTENSITY
+                or z + dz < 0
+                or z + dz >= GENERATION_INTENSITY
+            ):
                 continue
             if voxels[get_index(x + dx, y, z + dz)] == SAND:
                 return None

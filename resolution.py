@@ -2,6 +2,7 @@ from config import Config
 
 from screeninfo import get_monitors
 
+
 def get_screen_resolution():
     config = Config()
     if config.get("fullscreen") == 1:

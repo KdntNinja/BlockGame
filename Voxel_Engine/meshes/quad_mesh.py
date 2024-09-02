@@ -14,15 +14,14 @@ class QuadMesh(BaseMesh):
         self.vao = self.get_vao()
 
     def get_vertex_data(self):
-        vertices = np.array([
-            (0, 0, 0), (1, 0, 1), (1, 0, 0),
-            (0, 0, 0), (0, 0, 1), (1, 0, 1)
-        ], dtype="uint8")
+        vertices = np.array(
+            [(0, 0, 0), (1, 0, 1), (1, 0, 0), (0, 0, 0), (0, 0, 1), (1, 0, 1)],
+            dtype="uint8",
+        )
 
-        tex_coords = np.array([
-            (0, 0), (1, 1), (1, 0),
-            (0, 0), (0, 1), (1, 1)
-        ], dtype="uint8")
+        tex_coords = np.array(
+            [(0, 0), (1, 1), (1, 0), (0, 0), (0, 1), (1, 1)], dtype="uint8"
+        )
 
         vertex_data = np.hstack([tex_coords, vertices])
         return vertex_data

@@ -16,7 +16,9 @@ class VoxelEngine:
         pg.init()
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, MAJOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, MINOR_VER)
-        pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
+        pg.display.gl_set_attribute(
+            pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE
+        )
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, DEPTH_SIZE)
         pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, NUM_SAMPLES)
 
@@ -54,7 +56,7 @@ class VoxelEngine:
 
         self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
-        pg.display.set_caption(f"{self.clock.get_fps() :.0f}")
+        pg.display.set_caption(f"{self.clock.get_fps():.0f}")
 
     def render(self):
         self.ctx.clear(color=BG_COLOR)
@@ -63,7 +65,9 @@ class VoxelEngine:
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+            if event.type == pg.QUIT or (
+                event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE
+            ):
                 self.is_running = False
             self.player.handle_event(event=event)
 

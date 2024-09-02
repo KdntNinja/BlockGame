@@ -19,7 +19,9 @@ class Chunk:
         self.is_on_frustum = self.app.player.frustum.is_on_frustum
 
     def get_model_matrix(self):
-        m_model = glm.translate(glm.mat4(), glm.vec3(self.position) * GENERATION_INTENSITY)
+        m_model = glm.translate(
+            glm.mat4(), glm.vec3(self.position) * GENERATION_INTENSITY
+        )
         return m_model
 
     def set_uniform(self):

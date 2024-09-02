@@ -55,7 +55,7 @@ class Menu:
             title_font="data/font/MinecraftBold.otf",
             title_font_size=67,
             title_background_color=(26, 26, 26),
-            title_font_color=(255,255,255),
+            title_font_color=(255, 255, 255),
             widget_font="data/font/MinecraftRegular.otf",
             widget_font_size=39,
             widget_background_color=(26, 26, 26),
@@ -65,18 +65,50 @@ class Menu:
         self.create_base_menu()
 
     def create_base_menu(self):
-        self.menu = pygame_menu.Menu("BlockGame", self.width, self.height, theme=self.theme)
-        self.menu.add.text_input("Name: ", default=self.config.get("name"), onchange=lambda a: self.config.change_config("name", a))
+        self.menu = pygame_menu.Menu(
+            "BlockGame", self.width, self.height, theme=self.theme
+        )
+        self.menu.add.text_input(
+            "Name: ",
+            default=self.config.get("name"),
+            onchange=lambda a: self.config.change_config("name", a),
+        )
         self.menu.add.button("Play", self.start_the_game)
         self.menu.add.button("Settings", self.create_settings_menu)
         self.menu.add.button("Quit", exit)
 
     def create_settings_menu(self):
-        settings_menu = pygame_menu.Menu("Settings", self.width, self.height, theme=self.theme)
-        settings_menu.add.selector("Screen: ", [("Windowed", 0), ("Fullscreen", 1)], onchange=lambda value, index: self.config.change_config("fullscreen", index), default=int(self.config.get("fullscreen")))
-        settings_menu.add.selector("Mode: ", [("Spectator", 0), ("Survival", 1)], onchange=lambda value, index: self.config.change_config("mode", index), default=int(self.config.get("mode")))
-        settings_menu.add.selector("Generation: ", [("Initial", 0), ("Constant", 1)], onchange=lambda value, index: self.config.change_config("world", index), default=int(self.config.get("world")))
-        settings_menu.add.button("Back", lambda: [self.config.save_config(),self.exit_settings_menu()])
+        settings_menu = pygame_menu.Menu(
+            "Settings", self.width, self.height, theme=self.theme
+        )
+        settings_menu.add.selector(
+            "Screen: ",
+            [("Windowed", 0), ("Fullscreen", 1)],
+            onchange=lambda value, index: self.config.change_config(
+                "fullscreen", index
+            ),
+            default=int(self.config.get("fullscreen")),
+        )
+        settings_menu.add.selector(
+            "Mode: ",
+            [("Spectator", 0), ("Survival", 1)],
+            onchange=lambda value, index: self.config.change_config(
+                "mode", index
+            ),
+            default=int(self.config.get("mode")),
+        )
+        settings_menu.add.selector(
+            "Generation: ",
+            [("Initial", 0), ("Constant", 1)],
+            onchange=lambda value, index: self.config.change_config(
+                "world", index
+            ),
+            default=int(self.config.get("world")),
+        )
+        settings_menu.add.button(
+            "Back",
+            lambda: [self.config.save_config(), self.exit_settings_menu()],
+        )
         settings_menu.mainloop(self.surface)
 
     def exit_settings_menu(self):

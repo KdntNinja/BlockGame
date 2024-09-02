@@ -2,6 +2,7 @@ import json
 
 from settings import CONFIG_FILE
 
+
 class Default:
     def __init__(self):
         self.name: str = "Player 1"

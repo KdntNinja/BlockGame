@@ -14,7 +14,7 @@ NUM_SAMPLES = 1  # antialiasing
 # game
 FPS = 60
 
-# resolution
+# Window
 WIN_RES = glm.vec2(get_screen_resolution())
 
 # world generation

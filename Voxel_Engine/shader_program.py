@@ -52,5 +52,7 @@ class ShaderProgram:
         with open(f"Voxel_Engine/shaders/{shader_name}.frag") as file:
             fragment_shader = file.read()
 
-        program = self.ctx.program(vertex_shader=vertex_shader, fragment_shader=fragment_shader)
+        program = self.ctx.program(
+            vertex_shader=vertex_shader, fragment_shader=fragment_shader
+        )
         return program

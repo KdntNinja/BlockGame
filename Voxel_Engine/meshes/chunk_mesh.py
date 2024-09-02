@@ -23,6 +23,6 @@ class ChunkMesh(BaseMesh):
             chunk_voxels=self.chunk.voxels,
             format_size=self.format_size,
             chunk_pos=self.chunk.position,
-            world_voxels=self.chunk.world.voxels
+            world_voxels=self.chunk.world.voxels,
         )
         return mesh

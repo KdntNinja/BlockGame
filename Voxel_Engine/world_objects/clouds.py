@@ -17,7 +17,9 @@ class Clouds:
         self.mesh.program["center"].value = int(new_center)
 
         if self.system == "default":
-            self.mesh.program["color_change"] = 0.5 * sin(self.colour_change_speed * self.app.time)
+            self.mesh.program["color_change"] = 0.5 * sin(
+                self.colour_change_speed * self.app.time
+            )
 
     def render(self):
         self.mesh.render()

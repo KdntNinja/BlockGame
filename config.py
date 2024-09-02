@@ -3,6 +3,7 @@ import json
 from settings import CONFIG_FILE
 from default_config import Default
 
+
 class Config:
     def __init__(self):
         self.filename = CONFIG_FILE
